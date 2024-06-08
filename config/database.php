@@ -144,7 +144,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
@@ -165,6 +165,63 @@ return [
             'database' => env('REDIS_CACHE_DB', '1'),
         ],
 
+    ],
+
+    'products' => [
+        'category' => ['tech', 'clothes', 'food', 'drinks', 'furniture'],
+    ],
+
+    'departments' => [
+        'lima' => [
+            "Ancón",
+            "Ate",
+            "Barranco",
+            "Breña",
+            "Carabayllo",
+            "Chaclacayito",
+            "Chorrillos",
+            "Cieneguilla",
+            "Comas",
+            "El Agustino",
+            "Independencia",
+            "Jesús María",
+            "La Molina",
+            "La Victoria",
+            "Lince",
+            "Los Olivos",
+            "Lurigancho",
+            "Lurín",
+            "Magdalena del Mar",
+            "Magdalena Vieja",
+            "Miraflores",
+            "Miraflores",
+            "Pachacámac",
+            "Pucusana",
+            "Pueblo Libre",
+            "Puente Piedra",
+            "Puente Piedra",
+            "San Borja",
+            "San Isidro",
+            "San Juan de Lurigancho",
+            "San Juan de Miraflores",
+            "San Luis",
+            "San Martín de Porres",
+            "San Miguel",
+            "Santa Anita",
+            "Santa María del Mar",
+            "Santa Rosa",
+            "Santa Rosa de Quives",
+            "Surco",
+            "Surquillo",
+            "Ventanilla",
+            "Villa El Salvador",
+            "Villa María del Triunfo"
+        ],
+    ],
+
+    'time' => [
+        'month_description' => ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        'week_description' => ['First week', 'Second week', 'Third week', 'Fourth week', 'Fifth week'],
     ],
 
 ];

@@ -14,6 +14,30 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('items_sold')->unsigned()->default(1)->nullable(false);
+            $table->float('sales_amount', 2)->unsigned()->default(0)->nullable(false);
+
+            $table->foreignId('store_id')
+            ->nullable(false)
+            ->references('id')
+            ->on('stores')
+            ->cascadeOnUpdate()
+            ->restrictOnDelete();
+
+            $table->foreignId('time_id')
+            ->nullable(false)
+            ->references('id')
+            ->on('time')
+            ->cascadeOnUpdate()
+            ->restrictOnDelete();
+
+            $table->foreignId('product_id')
+            ->nullable(false)
+            ->references('id')
+            ->on('products')
+            ->cascadeOnUpdate()
+            ->restrictOnDelete();
+
         });
     }
 

@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('description')->nullable(false)->index();
+            $table->enum('category', config('database.products.category'))->default(config('database.products.category')[0])->nullable(false)->index();
+            $table->enum('state', [1, 3])->default(1)->nullable(false);
+            $table->string('description_categoyr')->nullable(false);
+            $table->float('unit_price', 2)->unsigned()->default(0)->nullable(false);
             $table->timestamps();
         });
     }
