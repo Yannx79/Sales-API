@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreSalesRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreSalesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,12 @@ class StoreSalesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'items_sold' => ['required', 'integer', 'min:1'], // Minimum 1 item sold
+            'sales_amount' => ['required', 'numeric', 'min:0.01'], // Minimum sales amount of 0.01
+            'state' => ['required', Rule::in([1,3 ])],
+            'store_id' => ['required', 'exists:stores,id'], // Ensure store exists
+            'time_id' => ['required', 'exists:times,id'], // Ensure time record exists
+            'product_id' => ['required', 'exists:products,id'], // Ensure product exists
         ];
     }
 }

@@ -13,7 +13,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::active()
+            ->orderBy('category', 'asc')
+            ->orderBy('description', 'asc')
+            ->paginate(10);
+        return $products;
+        $data = [
+            'products' => $products,
+            'status' => 200,
+        ];
+        return response()->json($data, 200);
     }
 
     /**

@@ -13,7 +13,16 @@ class StoreController extends Controller
      */
     public function index()
     {
-        //
+        $stores = Store::active()
+            ->orderBy('district', 'asc')
+            ->orderBy('description', 'asc')
+            ->paginate(10);
+        return $stores;
+        $data = [
+            'stores' => $stores,
+            'status' => 200,
+        ];
+        return response()->json($data, 200);
     }
 
     /**
