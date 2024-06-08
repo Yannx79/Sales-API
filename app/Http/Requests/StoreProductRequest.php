@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,14 @@ class StoreProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        $categoryOptions = config('database.products.category');
+
         return [
-            //
+            'description' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', Rule::in($categoryOptions)],
+            'state' => ['required', 'integer', Rule::in([1, 3])],
+            'description_category' => ['required', 'string', 'max:255'],
+            'unit_price' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

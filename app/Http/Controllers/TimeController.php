@@ -13,7 +13,16 @@ class TimeController extends Controller
      */
     public function index()
     {
-        //
+        $times = Time::active()
+            ->orderBy('date', 'desc')
+            ->orderBy('week', 'asc')
+            ->paginate(10);
+        return $times;
+        $data = [
+            'times' => $times,
+            'status' => 200,
+        ];
+        return response()->json($data, 200);
     }
 
     /**

@@ -10,6 +10,14 @@ class Sales extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
+
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
@@ -27,6 +35,6 @@ class Sales extends Model
 
     public function scopeActive(Builder $query): void
     {
-        $query->where('active', 1);
+        $query->where('state', 1);
     }
 }

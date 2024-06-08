@@ -10,6 +10,13 @@ class Store extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     public function sales()
     {
         return $this->hasMany(Sales::class, 'store_id', 'id');
@@ -17,7 +24,7 @@ class Store extends Model
 
     public function scopeActive(Builder $query): void
     {
-        $query->where('active', 1);
+        $query->where('state', 1);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateStoreRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,16 @@ class UpdateStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $districtOptions = config('database.departments.lima');
+
         return [
-            //
+            'description' => ['required', 'string', 'max:255'],
+            'district' => [
+                'required',
+                'string',
+                Rule::in($districtOptions),
+            ],
+            'state' => ['required', 'integer', Rule::in([1, 3])],
         ];
     }
 }
