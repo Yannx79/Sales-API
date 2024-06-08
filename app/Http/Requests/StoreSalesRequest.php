@@ -25,7 +25,7 @@ class StoreSalesRequest extends FormRequest
         return [
             'items_sold' => ['required', 'integer', 'min:1'], // Minimum 1 item sold
             'sales_amount' => ['required', 'numeric', 'min:0.01'], // Minimum sales amount of 0.01
-            'state' => ['required', Rule::in([1,3 ])],
+            'state' => ['required', Rule::in([1, 3])],
             'store_id' => ['required', 'exists:stores,id'], // Ensure store exists
             'time_id' => ['required', 'exists:times,id'], // Ensure time record exists
             'product_id' => ['required', 'exists:products,id'], // Ensure product exists
