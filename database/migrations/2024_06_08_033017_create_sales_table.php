@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->integer('items_sold')->unsigned()->default(1)->nullable(false);
             $table->float('sales_amount', 2)->unsigned()->default(0)->nullable(false);
+            $table->enum('state', [1, 3])->default(1)->nullable(false);
 
             $table->foreignId('store_id')
             ->nullable(false)
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->foreignId('time_id')
             ->nullable(false)
             ->references('id')
-            ->on('time')
+            ->on('times')
             ->cascadeOnUpdate()
             ->restrictOnDelete();
 
