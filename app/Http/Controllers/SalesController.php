@@ -47,10 +47,10 @@ class SalesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sales $sales)
+    public function show(Sales $sale)
     {
-        $sales = Sales::find($sales->id);
-        if (!$sales) {
+        $sale = Sales::find($sale->id);
+        if (!$sale) {
             $data = [
                 'message' => 'Sales not found!',
                 'status' => 404
@@ -58,7 +58,7 @@ class SalesController extends Controller
             return response()->json($data, 404);
         }
         $data = [
-            'sales' => $sales,
+            'sales' => $sale,
             'status' => 200
         ];
         return response()->json($data, 200);
@@ -67,19 +67,19 @@ class SalesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSalesRequest $request, Sales $sales)
+    public function update(UpdateSalesRequest $request, Sales $sale)
     {
-        $sales = Sales::find($sales->id);
-        if (!$sales) {
+        $sale = Sales::find($sale->id);
+        if (!$sale) {
             $data = [
                 'message' => 'Sales not found!',
                 'status' => 404
             ];
             return response()->json($data, 404);
         }
-        $sales->update($request->all());
+        $sale->update($request->all());
         $data = [
-            'sales' => $sales,
+            'sales' => $sale,
             'status' => 200
         ];
         return response()->json($data, 200);
@@ -88,17 +88,17 @@ class SalesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sales $sales)
+    public function destroy(Sales $sale)
     {
-        $sales = Sales::find($sales->id);
-        if (!$sales) {
+        $sale = Sales::find($sale->id);
+        if (!$sale) {
             $data = [
                 'message' => 'Sales not found!',
                 'status' => 404
             ];
             return response()->json($data, 404);
         }
-        $sales->delete();
+        $sale->delete();
         return response()->json(null, 204);
     }
 }
