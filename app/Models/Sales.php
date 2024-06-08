@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\SaleScope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[ScopedBy([SaleScope::class])]
 class Sales extends Model
 {
     use HasFactory;

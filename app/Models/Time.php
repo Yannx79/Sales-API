@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,4 +29,10 @@ class Time extends Model
         $query->where('state', 1);
     }
 
+    public function scopeLastMonth(Builder $query)
+    {
+        $currentDate = Carbon::now();
+        $currentDate->day(1);
+        $query->where('date', '>=', $currentDate);
+    }
 }

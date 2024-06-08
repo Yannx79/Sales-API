@@ -5,16 +5,49 @@ namespace App\Http\Controllers;
 use App\Models\Sales;
 use App\Http\Requests\StoreSalesRequest;
 use App\Http\Requests\UpdateSalesRequest;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 class SalesController extends Controller
 {
+
+    public function lastMonth()
+    {
+        $sales = Sales::whereHas('time', function (Builder $query) {
+            $query->lastMonth();
+        })
+        ->get()
+        ->transform(function ($sale) {
+            return [
+                'id' => $sale->id,
+                'items_sold' => $sale->items_sold,
+                'sales_amount' => $sale->sales_amount,
+                'state' => $sale->state,
+                'store' => $sale->store,
+                'time' => $sale->time,
+                'product' => $sale->product,
+            ];
+        });
+        if (!$sales) {
+            $data = [
+                'sales' => 'Not sales int this month',
+                'status' => 404,
+            ];
+            return response()->json($data, 404);
+        }
+        $data = [
+            'sales' => $sales,
+            'status' => 200,
+        ];
+        return response()->json($data, );
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $sales = Sales::active()
-            ->orderBy('created_at', 'desc')
+        $sales = Sales::orderBy('created_at', 'desc')
             ->paginate(10);
         return $sales;
         $data = [
