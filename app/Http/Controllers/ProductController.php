@@ -30,7 +30,19 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $product = Product::create($request->all());
+        if (!$product) {
+            $data = [
+                'message' => 'Product not found!',
+                'status' => 404,
+            ];
+            return response()->json($data, 404);
+        }
+        $data = [
+            'product' => $product,
+            'status' => 201,
+        ];
+        return response()->json($data, 201);
     }
 
     /**
@@ -38,7 +50,19 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $product = Product::find($product->id);
+        if (!$product) {
+            $data = [
+                'message' => 'Product not found!',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+        $data = [
+            'product' => $product,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
     }
 
     /**
@@ -46,7 +70,20 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $product = Product::find($product->id);
+        if (!$product) {
+            $data = [
+                'message' => 'Product not found!',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+        $product->update($request->all());
+        $data = [
+            'product' => $product,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
     }
 
     /**
@@ -54,6 +91,15 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product = Product::find($product->id);
+        if (!$product) {
+            $data = [
+                'message' => 'Product not found!',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+        $product->delete();
+        return response()->json(null, 204);
     }
 }

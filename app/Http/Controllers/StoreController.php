@@ -30,7 +30,19 @@ class StoreController extends Controller
      */
     public function store(StoreStoreRequest $request)
     {
-        //
+        $store = Store::create($request->all());
+        if (!$store) {
+            $data = [
+                'message' => 'Store not found!',
+                'status' => 404,
+            ];
+            return response()->json($data, 404);
+        }
+        $data = [
+            'store' => $store,
+            'status' => 201,
+        ];
+        return response()->json($data, 201);
     }
 
     /**
@@ -38,7 +50,19 @@ class StoreController extends Controller
      */
     public function show(Store $store)
     {
-        //
+        $store = Store::find($store->id);
+        if (!$store) {
+            $data = [
+                'message' => 'Store not found!',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+        $data = [
+            'store' => $store,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
     }
 
     /**
@@ -46,7 +70,20 @@ class StoreController extends Controller
      */
     public function update(UpdateStoreRequest $request, Store $store)
     {
-        //
+        $store = Store::find($store->id);
+        if (!$store) {
+            $data = [
+                'message' => 'Store not found!',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+        $store->update($request->all());
+        $data = [
+            'store' => $store,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
     }
 
     /**
@@ -54,6 +91,15 @@ class StoreController extends Controller
      */
     public function destroy(Store $store)
     {
-        //
+        $store = Store::find($store->id);
+        if (!$store) {
+            $data = [
+                'message' => 'Store not found!',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+        $store->delete();
+        return response()->json(null, 204);
     }
 }
