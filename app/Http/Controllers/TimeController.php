@@ -30,7 +30,19 @@ class TimeController extends Controller
      */
     public function store(StoreTimeRequest $request)
     {
-        //
+        $time = Time::create($request->all());
+        if (!$time) {
+            $data = [
+                'message' => 'Time not found!',
+                'status' => 404,
+            ];
+            return response()->json($data, 404);
+        }
+        $data = [
+            'time' => $time,
+            'status' => 201,
+        ];
+        return response()->json($data, 201);
     }
 
     /**
@@ -38,7 +50,19 @@ class TimeController extends Controller
      */
     public function show(Time $time)
     {
-        //
+        $time = Time::find($time->id);
+        if (!$time) {
+            $data = [
+                'message' => 'Time not found!',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+        $data = [
+            'time' => $time,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
     }
 
     /**
@@ -46,7 +70,20 @@ class TimeController extends Controller
      */
     public function update(UpdateTimeRequest $request, Time $time)
     {
-        //
+        $time = Time::find($time->id);
+        if (!$time) {
+            $data = [
+                'message' => 'Time not found!',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+        $time->update($request->all());
+        $data = [
+            'store' => $time,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
     }
 
     /**
@@ -54,6 +91,15 @@ class TimeController extends Controller
      */
     public function destroy(Time $time)
     {
-        //
+        $time = Time::find($time->id);
+        if (!$time) {
+            $data = [
+                'message' => 'Time not found!',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+        $time->delete();
+        return response()->json(null, 204);
     }
 }
