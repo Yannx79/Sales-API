@@ -35,4 +35,10 @@ class Time extends Model
         $currentDate->day(1);
         $query->where('date', '>=', $currentDate);
     }
+
+    public function scopeSalesYear(Builder $query, string $year)
+    {
+        $saleDate = Carbon::parse($year);
+        $query->whereYear('date', $saleDate->year);
+    }
 }
