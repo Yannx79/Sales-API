@@ -23,4 +23,5 @@ Route::prefix('v1')->as('api.')->group(function () {
         'times' => TimeController::class // No necesario su logica puede gestionarla sales
     ]);
     // sales
+    // testing language
 });
