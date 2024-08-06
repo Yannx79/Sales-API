@@ -19,7 +19,8 @@ class SalesController extends Controller
 
     public function storeMoreSales()
     {
-        return 'store more sales';
+        $data = Sales::select('store_id')->groupBy('store_id')->get();
+        return "";
     }
 
     public function salesYear(Request $request)
@@ -50,7 +51,28 @@ class SalesController extends Controller
 
     public function salesMonthYear(Request $request)
     {
-        return 'dfs';
+        $totalSalesAmount = Sales::whereHas('time', function (Builder $query) use ($request) {
+            $query->salesMonthYear($request->year.'-'.$request->month.'-01');
+        })->sum('sales_amount');
+        $sales = Sales::whereHas('time', function (Builder $query) use ($request) {
+            $query->salesMonthYear($request->year.'-'.$request->month.'-01');
+        })->get()
+        ->transform(function ($sale) {
+            return [
+                'id' => $sale->id,
+                'items_sold' => $sale->items_sold,
+                'sales_amount' => $sale->sales_amount,
+                'district_store' => $sale->store->district,
+                'date_time' => $sale->time->date,
+                'product' => $sale->product,
+            ];
+        });
+        $data = [
+            'total_sales_amount' => ($sales->count() != 0) ? $totalSalesAmount : 'Not sales int this year',
+            'sales_year' => ($sales->count() != 0) ? $sales : 'Not sales int this year',
+            'status' => ($sales->count() != 0) ? 200 : 404,
+        ];
+        return response()->json($data, (!$sales->count()) ? 200 : 404);
     }
 
     public function lastMonth()
